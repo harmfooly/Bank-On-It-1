@@ -1,68 +1,95 @@
-# Bank-On-It-1
+# Bank-On-It
 11/6/2026
 
 ```mermaid
 
-classDiagram
 
-    class CheckingAccount {
-        - double balance
-        + CheckingAccount()
-        + CheckingAccount(balance)
-        + void main()
-        + String menu()
-        + String start()
-        + double getBalance()
-        + String getBalanceString()
-        + void setBalance(balance)
-        + void checkBalance()
-        - double getDouble()
-        + void makeDeposit()
-        + void makeWithdrawal()
-    }
+classDiagram
 
     class HasMenu {
         <<interface>>
-        + String menu()
-        + void start()
+        +menu() String
+        +start() void
+    }
+
+    class CheckingAccount {
+        -balance: double
+        +CheckingAccount()
+        +CheckingAccount(balance)
+        +main(): void
+        +menu(): String
+        +start(): String
+        +getBalance(): double
+        +getBalanceString(): String
+        +setBalance(balance): void
+        +checkBalance(): void
+        -getDouble(): double
+        +makeDeposit(): void
+        +makeWithdrawal(): void
     }
 
     class SavingsAccount {
-        - double interestRate
-        + main()
-        + void calcInterest()
-        + void setInterestRate()
-        + void getInterestRate()
-    }
-
-    class Customer {
-        - CheckingAccount checking
-        - SavingsAccount savings
-        + void main()
-        + Customer()
-        + void start()
-        + String menu()
-        + void changePIN()
-        + String getReport()
+        -interestRate: double
+        +main(*)
+        +calcInterest(): void
+        +setInterestRate(): void
+        +getInterestRate(): void
     }
 
     class User {
         <<abstract>>
-        - String userName
-        - String PIN
-        + boolean login()
-        + boolean login(userName, PIN)
-        + void setUserName(userName)
-        + String getUserName()
-        + void setPIN(PIN)
-        + String getPIN()
-        + String getReport()*
+        -userName: String
+        -PIN: String
+        +login: boolean
+        +login(userName, PIN): boolean
+        +setUserName(userName): void
+        +getUserName(): String
+        +setPIN(PIN): void
+        +getPIN(): String
+        +getReport(): String
     }
 
-    CheckingAccount ..|> HasMenu : Implements
-    SavingsAccount --|> CheckingAccount : Extends
-    SavingsAccount ..|> HasMenu : Implements
-    Customer --|> User : Extends
+    class Admin {
+        +Admin()
+        +menu(): String
+        +getReport(): String
+    }
+
+    class Customer {
+        -checking: CheckingAccount
+        -savings: SavingsAccount
+        +main(): void
+        +Customer()
+        +start(): void
+        +menu(): String
+        +changePIN(): void
+        +getReport(): String
+    }
+
+    class Bank {
+        -admin: Admin
+        -customers: ArrayList
+        +Bank()
+        +main(): void
+        +loadSampleCustomers(): void
+        +loadCustomers(): void
+        +saveCustomers(): void
+        +fullCustomerReport(): void
+        +addUser(): void
+        +applyInterest(): void
+        +loginAsCustomer(): void
+        +menu(): void
+        +start(): void
+        +startAdmin(): void
+    }
+
+    CheckingAccount ..|> HasMenu
+    User ..|> HasMenu
+    SavingsAccount --|> CheckingAccount
+    Admin --|> User
+    Customer --|> User
+    Bank o-- "1" Admin
+    Bank o-- "n" Customer
 ```
 
 interface HasMenu 
