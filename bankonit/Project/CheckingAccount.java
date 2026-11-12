@@ -35,7 +35,7 @@ public class CheckingAccount implements HasMenu, Serializable {
         Bank.main(args); // starts the program at the banking menu
     } // end CheckingAccount main
 
-    String accountType() {
+    String accountType() { // this is just an easy way to handle differentiating between Checking and Savings
         return "Checking Account";
     } // end accountType
 
